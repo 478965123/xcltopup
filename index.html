@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SCHONEY Top Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #33333a;
+        --muted: #5f6067;
+        --line: #edf0f3;
+        --input: #cfd6dc;
+        --brand: #ff9800;
+        --gold: #ffd34a;
+        --dark: #30333a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #fff;
+        color: var(--ink);
+        font-family: "Prompt", Arial, "Helvetica Neue", Tahoma, sans-serif;
+        font-size: 14px;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        height: 111px;
+        border-bottom: 1px solid #f1f1f1;
+        box-shadow: 0 2px 12px rgba(28, 31, 35, 0.04);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 27px 30px 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        line-height: 1;
+      }
+
+      .header-logo {
+        display: block;
+        width: 160px;
+        height: auto;
+      }
+
+      .language {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-top: 47px;
+        color: #24272d;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .language-button {
+        position: relative;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        padding: 0;
+      }
+
+      .language-button.active {
+        position: relative;
+      }
+
+      .language-button.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        height: 2px;
+        background: var(--brand);
+      }
+
+      .language .divider {
+        width: 1px;
+        height: 12px;
+        background: #20232a;
+        opacity: 0.75;
+      }
+
+      .content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding: 37px 24px 90px;
+      }
+
+      .panel {
+        width: min(754px, 100%);
+        min-height: 487px;
+        border: 1px solid #eceff1;
+        border-radius: 8px;
+        box-shadow: 0 8px 22px rgba(18, 23, 30, 0.08);
+        display: flex;
+        flex-direction: column;
+        padding: 49px 16px 27px;
+      }
+
+      .panel-head {
+        text-align: center;
+      }
+
+      .title-logo {
+        display: inline-block;
+        width: 44px;
+        height: auto;
+        margin-bottom: 11px;
+      }
+
+      h1 {
+        margin: 0 0 4px;
+        color: rgb(55, 50, 60);
+        font-family: "Prompt", Arial, "Helvetica Neue", Tahoma, sans-serif;
+        font-size: 28px;
+        font-weight: 400;
+        letter-spacing: 0.3px;
+        line-height: 44.8px;
+        overflow-wrap: break-word;
+        text-align: center;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: #3f4047;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .form {
+        width: min(721px, 100%);
+        margin: 31px auto 0;
+      }
+
+      .field {
+        margin-bottom: 7px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 7px;
+        color: #3b3d43;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .required {
+        color: #ef9a00;
+      }
+
+      input {
+        width: 100%;
+        height: 28px;
+        border: 1px solid var(--input);
+        border-radius: 3px;
+        background: #fbfcfd;
+        color: #32343a;
+        font: inherit;
+        font-size: 13px;
+        padding: 4px 10px;
+        outline: none;
+      }
+
+      input::placeholder {
+        color: #a7acb2;
+      }
+
+      input:focus {
+        border-color: #aeb8c1;
+        box-shadow: 0 0 0 2px rgba(228, 137, 0, 0.08);
+      }
+
+      .date-field {
+        position: relative;
+      }
+
+      .date-input-wrap {
+        position: relative;
+      }
+
+      .date-input-wrap input {
+        padding-right: 38px;
+      }
+
+      .date-picker-button {
+        position: absolute;
+        top: 50%;
+        right: 7px;
+        width: 24px;
+        height: 24px;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--brand);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-50%);
+      }
+
+      .date-picker-button:hover,
+      .date-picker-button:focus-visible {
+        background: #fff4e1;
+        outline: none;
+      }
+
+      .date-picker-button svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .date-picker {
+        position: absolute;
+        z-index: 10;
+        top: calc(100% + 5px);
+        left: 0;
+        width: 292px;
+        border: 1px solid #edf0f3;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 12px 28px rgba(18, 23, 30, 0.13);
+        padding: 12px;
+      }
+
+      .date-picker[hidden] {
+        display: none;
+      }
+
+      .date-picker-head {
+        display: grid;
+        grid-template-columns: 30px 1fr 30px;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .calendar-nav {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #edf0f3;
+        border-radius: 50%;
+        background: #fff;
+        color: #555861;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .calendar-nav:hover {
+        border-color: rgba(255, 152, 0, 0.45);
+        background: #fff8ed;
+        color: var(--brand);
+      }
+
+      .date-picker-title {
+        color: rgb(55, 50, 60);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+
+      .calendar-weekday {
+        color: #8f9298;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 24px;
+        text-align: center;
+      }
+
+      .calendar-day {
+        width: 100%;
+        height: 30px;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        background: #fff;
+        color: #3b3d43;
+        cursor: pointer;
+        font-family: "Prompt", Arial, "Helvetica Neue", Tahoma, sans-serif;
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .calendar-day:hover {
+        background: #fff8ed;
+        color: var(--brand);
+      }
+
+      .calendar-day.is-selected {
+        border-color: var(--brand);
+        background: var(--brand);
+        color: #fff;
+      }
+
+      .calendar-day.is-today:not(.is-selected) {
+        border-color: rgba(255, 152, 0, 0.45);
+      }
+
+      .calendar-day.is-muted {
+        color: #c1c5ca;
+      }
+
+      .field.has-error input {
+        border-color: #d72d2d;
+        background: #fffafa;
+      }
+
+      .field.has-error input:focus {
+        border-color: #d72d2d;
+        box-shadow: 0 0 0 2px rgba(215, 45, 45, 0.1);
+      }
+
+      .error-message {
+        min-height: 16px;
+        margin: 4px 0 0;
+        color: #d72d2d;
+        font-size: 11px;
+        line-height: 1.45;
+      }
+
+      .lookup-view .field {
+        margin-bottom: 2px;
+      }
+
+      .lookup-view .error-message {
+        min-height: 6px;
+        margin-top: 2px;
+      }
+
+      .lookup-view .field:first-child .error-message {
+        min-height: 5px;
+        margin-top: 0;
+      }
+
+      .button {
+        width: 100%;
+        height: 32px;
+        margin-top: 12px;
+        border: 1.25px solid var(--brand);
+        border-radius: 20px;
+        background: var(--brand);
+        color: #fff;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        font-family: "Prompt", Arial, "Helvetica Neue", Tahoma, sans-serif;
+        line-height: 1;
+      }
+
+      .button:hover {
+        background: #f08f00;
+        border-color: #f08f00;
+      }
+
+      .lookup-view,
+      .history-view,
+      .topup-view,
+      .qr-view {
+        width: min(721px, 100%);
+        margin: 31px auto 0;
+      }
+
+      .history-view[hidden],
+      .topup-view[hidden],
+      .qr-view[hidden] {
+        display: none;
+      }
+
+      .summary-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+
+      .summary-title {
+        margin: 0;
+        color: rgb(55, 50, 60);
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .summary-code {
+        color: #85858d;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.6;
+      }
+
+      .balance-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 86px;
+        border: 1px solid rgba(255, 152, 0, 0.28);
+        border-radius: 8px;
+        background: #fff8ed;
+        padding: 18px 22px;
+      }
+
+      .balance-label {
+        color: #77777f;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+
+      .balance-amount {
+        color: rgb(55, 50, 60);
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: 0.3px;
+      }
+
+      .balance-unit {
+        color: #85858d;
+        font-size: 14px;
+        font-weight: 400;
+      }
+
+      .history-title {
+        margin: 24px 0 10px;
+        color: rgb(55, 50, 60);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .history-filter {
+        width: min(260px, 100%);
+        margin: 18px 0 0;
+      }
+
+      .history-filter .date-picker {
+        width: 292px;
+      }
+
+      .history-list {
+        border: 1px solid #edf0f3;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .history-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: center;
+        min-height: 58px;
+        padding: 10px 16px;
+        border-bottom: 1px solid #edf0f3;
+      }
+
+      .history-row:last-child {
+        border-bottom: 0;
+      }
+
+      .history-name {
+        color: rgb(55, 50, 60);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .history-name-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .history-toggle {
+        width: 20px;
+        height: 20px;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: #85858d;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transform: rotate(0deg);
+        transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+      }
+
+      .history-toggle:hover,
+      .history-toggle:focus-visible {
+        background: #fff4e1;
+        color: var(--brand);
+        outline: none;
+      }
+
+      .history-toggle[aria-expanded="true"] {
+        transform: rotate(180deg);
+      }
+
+      .history-toggle svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .history-date {
+        color: #8f9298;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+
+      .history-amount {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.3;
+        white-space: nowrap;
+      }
+
+      .history-amount.credit {
+        color: #168a4a;
+      }
+
+      .history-amount.debit {
+        color: #cf4e3a;
+      }
+
+      .history-money {
+        text-align: right;
+      }
+
+      .history-balance {
+        margin-top: 3px;
+        color: #8f9298;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.5;
+        white-space: nowrap;
+      }
+
+      .history-detail-row {
+        border-bottom: 1px solid #edf0f3;
+        background: #fbfcfd;
+        padding: 8px 16px 12px 43px;
+      }
+
+      .history-detail-row[hidden] {
+        display: none;
+      }
+
+      .history-detail-list {
+        display: grid;
+        gap: 0;
+        padding-top: 0;
+      }
+
+      .history-detail-item {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 12px;
+        align-items: center;
+        min-height: 26px;
+        color: #6f727a;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .history-detail-price {
+        color: #3b3d43;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .history-empty {
+        min-height: 58px;
+        padding: 18px 16px;
+        color: #8f9298;
+        font-size: 12px;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .secondary-button {
+        height: 32px;
+        border: 1.25px solid var(--brand);
+        border-radius: 20px;
+        background: #fff;
+        color: var(--brand);
+        cursor: pointer;
+        font-family: "Prompt", Arial, "Helvetica Neue", Tahoma, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .primary-button {
+        height: 32px;
+        border: 1.25px solid var(--brand);
+        border-radius: 20px;
+        background: var(--brand);
+        color: #fff;
+        cursor: pointer;
+        font-family: "Prompt", Arial, "Helvetica Neue", Tahoma, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .action-row {
+        display: grid;
+        grid-template-columns: 180px 180px;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .payment-card {
+        width: 360px;
+        max-width: 100%;
+        margin: 0 auto;
+        border: 1px solid #edf0f3;
+        border-radius: 8px;
+        background: #fff;
+        padding: 22px;
+        text-align: center;
+      }
+
+      .payment-title {
+        margin: 0 0 4px;
+        color: rgb(55, 50, 60);
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .payment-subtitle {
+        margin: 0 0 16px;
+        color: #85858d;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.6;
+      }
+
+      .qr-box {
+        width: 220px;
+        height: 220px;
+        margin: 0 auto 14px;
+        border: 1px solid #edf0f3;
+        border-radius: 6px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+      }
+
+      .qr-box img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .payment-amount {
+        color: rgb(55, 50, 60);
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      .payment-note {
+        margin-top: 4px;
+        color: #85858d;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      .powered {
+        margin-top: auto;
+        min-height: 36px;
+        padding-top: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: #85858d;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+
+      .powered .mini-brand {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .powered-logo {
+        display: block;
+        width: auto;
+        height: 20px;
+      }
+
+      @media (max-width: 720px) {
+        .header {
+          height: 88px;
+          padding: 22px 20px 0;
+        }
+
+        .brand {
+          transform: scale(0.9);
+          transform-origin: left top;
+        }
+
+        .language {
+          padding-top: 28px;
+        }
+
+        .content {
+          padding: 28px 14px 56px;
+        }
+
+        .panel {
+          min-height: 450px;
+          padding-top: 39px;
+        }
+
+        .summary-head,
+        .balance-box {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .balance-amount {
+          font-size: 28px;
+        }
+
+        .action-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .history-filter,
+        .history-filter .date-picker {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <div class="brand" aria-label="SCHONEY">
+          <img class="header-logo" src="./Schooney%20Logo-2.png" alt="SCHONEY" />
+        </div>
+
+        <nav class="language" aria-label="Language">
+          <button class="language-button active" type="button" data-lang="th">TH</button>
+          <span class="divider" aria-hidden="true"></span>
+          <button class="language-button" type="button" data-lang="en">EN</button>
+        </nav>
+      </header>
+
+      <section class="content">
+        <form class="panel" id="top-up-form">
+          <div class="panel-head">
+            <img class="title-logo" src="./Schooney%20Logo.png" alt="" />
+            <h1 data-i18n="pageTitle">เติมเงินออนไลน์</h1>
+            <p class="subtitle" data-i18n="subtitle">ระบุรหัสประจำตัวเพื่อตรวจสอบยอดเงินและประวัติการใช้จ่าย</p>
+          </div>
+
+          <div class="form lookup-view" id="lookup-view">
+            <div class="field">
+              <label for="student-id"><span data-i18n="identityLabel">รหัสนักเรียน/รหัสบุคลากร</span> <span class="required">*</span></label>
+              <input id="student-id" name="student-id" type="text" placeholder="เช่น 65001" aria-describedby="student-id-error" />
+              <p class="error-message" id="student-id-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field date-field">
+              <label for="birth-date"><span data-i18n="birthDateLabel">วันเดือนปีเกิด</span> <span class="required">*</span></label>
+              <div class="date-input-wrap">
+                <input id="birth-date" name="birth-date" type="text" inputmode="numeric" maxlength="10" autocomplete="bday" placeholder="dd/mm/yyyy" aria-describedby="birth-date-error" />
+                <button class="date-picker-button" id="date-picker-button" type="button" aria-label="เลือกวันเดือนปีเกิด" aria-expanded="false" aria-controls="date-picker">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1.5A2.5 2.5 0 0 1 22 6.5v12A2.5 2.5 0 0 1 19.5 21h-15A2.5 2.5 0 0 1 2 18.5v-12A2.5 2.5 0 0 1 4.5 4H6V3a1 1 0 0 1 1-1Zm12.5 8h-15v8.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5V10ZM5 6a.5.5 0 0 0-.5.5V8h15V6.5A.5.5 0 0 0 19 6H5Z" />
+                  </svg>
+                </button>
+                <div class="date-picker" id="date-picker" hidden>
+                  <div class="date-picker-head">
+                    <button class="calendar-nav" id="calendar-prev" type="button" aria-label="เดือนก่อนหน้า">‹</button>
+                    <div class="date-picker-title" id="calendar-title"></div>
+                    <button class="calendar-nav" id="calendar-next" type="button" aria-label="เดือนถัดไป">›</button>
+                  </div>
+                  <div class="calendar-grid" id="calendar-grid"></div>
+                </div>
+              </div>
+              <p class="error-message" id="birth-date-error" aria-live="polite"></p>
+            </div>
+
+            <button class="button" type="submit" data-i18n="checkButton">ตรวจสอบข้อมูล</button>
+          </div>
+
+          <section class="history-view" id="history-view" hidden>
+            <div class="summary-head">
+              <div>
+                <h2 class="summary-title" data-i18n="historyTitle">ประวัติการใช้จ่าย</h2>
+                <div class="summary-code"><span data-i18n="codeLabel">รหัส</span>: <span id="history-code">-</span></div>
+                <div class="summary-code"><span data-i18n="nameLabel">ชื่อ</span>: <span data-i18n="personName">ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา</span></div>
+              </div>
+            </div>
+
+            <div class="balance-box">
+              <div>
+                <div class="balance-label" data-i18n="balanceLabel">ยอดเงินคงเหลือ</div>
+                <div class="balance-amount">20 <span class="balance-unit" data-i18n="baht">บาท</span></div>
+              </div>
+            </div>
+
+            <div class="field date-field history-filter">
+              <label for="history-date"><span data-i18n="historyDateLabel">เลือกวันที่</span></label>
+              <div class="date-input-wrap">
+                <input id="history-date" name="history-date" type="text" inputmode="numeric" maxlength="10" placeholder="dd/mm/yyyy" readonly />
+                <button class="date-picker-button" id="history-date-picker-button" type="button" aria-label="เลือกวันที่ประวัติ" aria-expanded="false" aria-controls="history-date-picker">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1.5A2.5 2.5 0 0 1 22 6.5v12A2.5 2.5 0 0 1 19.5 21h-15A2.5 2.5 0 0 1 2 18.5v-12A2.5 2.5 0 0 1 4.5 4H6V3a1 1 0 0 1 1-1Zm12.5 8h-15v8.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5V10ZM5 6a.5.5 0 0 0-.5.5V8h15V6.5A.5.5 0 0 0 19 6H5Z" />
+                  </svg>
+                </button>
+                <div class="date-picker" id="history-date-picker" hidden>
+                  <div class="date-picker-head">
+                    <button class="calendar-nav" id="history-calendar-prev" type="button" aria-label="เดือนก่อนหน้า">‹</button>
+                    <div class="date-picker-title" id="history-calendar-title"></div>
+                    <button class="calendar-nav" id="history-calendar-next" type="button" aria-label="เดือนถัดไป">›</button>
+                  </div>
+                  <div class="calendar-grid" id="history-calendar-grid"></div>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="history-title" data-i18n="latestTitle">รายการล่าสุด</h3>
+            <div class="history-list" id="history-list" aria-label="ประวัติการใช้จ่าย"></div>
+
+            <div class="action-row">
+              <button class="secondary-button" type="button" id="back-button" data-i18n="backButton">ย้อนกลับ</button>
+              <button class="primary-button" type="button" id="topup-button" data-i18n="topupButton">เติมเงิน</button>
+            </div>
+          </section>
+
+          <section class="topup-view" id="topup-view" hidden>
+            <div class="summary-head">
+              <div>
+                <h2 class="summary-title" data-i18n="topupTitle">เติมเงิน</h2>
+                <div class="summary-code"><span data-i18n="codeLabel">รหัส</span>: <span id="topup-code">-</span></div>
+                <div class="summary-code"><span data-i18n="nameLabel">ชื่อ</span>: <span data-i18n="personName">ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา</span></div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="topup-amount"><span data-i18n="amountLabel">เติมเงินจำนวน (บาท)</span> <span class="required">*</span></label>
+              <input id="topup-amount" name="topup-amount" type="number" min="1" placeholder="0" />
+            </div>
+
+            <div class="action-row">
+              <button class="secondary-button" type="button" id="cancel-topup-button" data-i18n="backButton">ย้อนกลับ</button>
+              <button class="primary-button" type="button" id="confirm-topup-button" data-i18n="confirmButton">ยืนยัน</button>
+            </div>
+          </section>
+
+          <section class="qr-view" id="qr-view" hidden>
+            <div class="payment-card">
+              <h2 class="payment-title" data-i18n="qrTitle">Thai QR PromptPay</h2>
+              <p class="payment-subtitle" data-i18n="qrSubtitle">สแกน QR เพื่อเติมเงินเข้าบัญชี</p>
+
+              <div class="qr-box">
+                <img id="promptpay-qr" src="" alt="Thai QR PromptPay" />
+              </div>
+
+              <div class="payment-amount"><span id="qr-amount">0</span> <span data-i18n="baht">บาท</span></div>
+              <div class="payment-note"><span data-i18n="promptpayForCode">PromptPay สำหรับรหัส</span> <span id="qr-code">-</span></div>
+            </div>
+
+            <div class="action-row">
+              <button class="secondary-button" type="button" id="qr-back-button" data-i18n="backButton">ย้อนกลับ</button>
+              <button class="primary-button" type="button" id="qr-done-button" data-i18n="doneButton">เสร็จสิ้น</button>
+            </div>
+          </section>
+
+          <div class="powered">
+            <span>Powered by</span>
+            <span class="mini-brand">
+              <img class="powered-logo" src="./Schooney%20Logo-2.png" alt="SCHONEY" />
+            </span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const form = document.querySelector("#top-up-form");
+      const lookupView = document.querySelector("#lookup-view");
+      const historyView = document.querySelector("#history-view");
+      const topupView = document.querySelector("#topup-view");
+      const qrView = document.querySelector("#qr-view");
+      const studentInput = document.querySelector("#student-id");
+      const birthDateInput = document.querySelector("#birth-date");
+      const topupAmountInput = document.querySelector("#topup-amount");
+      const historyCode = document.querySelector("#history-code");
+      const topupCode = document.querySelector("#topup-code");
+      const qrCode = document.querySelector("#qr-code");
+      const qrAmount = document.querySelector("#qr-amount");
+      const promptpayQr = document.querySelector("#promptpay-qr");
+      const datePickerButton = document.querySelector("#date-picker-button");
+      const datePicker = document.querySelector("#date-picker");
+      const calendarTitle = document.querySelector("#calendar-title");
+      const calendarGrid = document.querySelector("#calendar-grid");
+      const calendarPrev = document.querySelector("#calendar-prev");
+      const calendarNext = document.querySelector("#calendar-next");
+      const historyDateInput = document.querySelector("#history-date");
+      const historyDatePickerButton = document.querySelector("#history-date-picker-button");
+      const historyDatePicker = document.querySelector("#history-date-picker");
+      const historyCalendarTitle = document.querySelector("#history-calendar-title");
+      const historyCalendarGrid = document.querySelector("#history-calendar-grid");
+      const historyCalendarPrev = document.querySelector("#history-calendar-prev");
+      const historyCalendarNext = document.querySelector("#history-calendar-next");
+      const historyList = document.querySelector("#history-list");
+      const backButton = document.querySelector("#back-button");
+      const topupButton = document.querySelector("#topup-button");
+      const cancelTopupButton = document.querySelector("#cancel-topup-button");
+      const confirmTopupButton = document.querySelector("#confirm-topup-button");
+      const qrBackButton = document.querySelector("#qr-back-button");
+      const qrDoneButton = document.querySelector("#qr-done-button");
+      const languageButtons = document.querySelectorAll(".language-button");
+      const promptPayId = "0812345678";
+      const calendarText = {
+        th: {
+          months: ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"],
+          weekdays: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
+          pickerLabel: "เลือกวันเดือนปีเกิด",
+          historyPickerLabel: "เลือกวันที่ประวัติ",
+          prevLabel: "เดือนก่อนหน้า",
+          nextLabel: "เดือนถัดไป",
+        },
+        en: {
+          months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+          weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+          pickerLabel: "Choose date of birth",
+          historyPickerLabel: "Choose history date",
+          prevLabel: "Previous month",
+          nextLabel: "Next month",
+        },
+      };
+      const historyTransactions = {
+        "19/05/2026": [
+          { type: "topup", amount: 50, balanceAfter: 50, time: "17:58" },
+          { type: "spend", amount: -10, balanceAfter: 40, time: "17:59" },
+          {
+            type: "spend",
+            amount: -30,
+            balanceAfter: 10,
+            time: "18:00",
+            items: [
+              { name: "สมุดปกแข็ง", quantity: 1, price: 10 },
+              { name: "ปากกา", quantity: 1, price: 20 },
+            ],
+          },
+        ],
+        "20/05/2026": [
+          { type: "topup", amount: 100, balanceAfter: 120, time: "08:30" },
+          {
+            type: "spend",
+            amount: -45,
+            balanceAfter: 75,
+            time: "12:10",
+            items: [
+              { name: "สมุดปกแข็ง", quantity: 1, price: 10 },
+              { name: "ปากกา", quantity: 1, price: 20 },
+              { name: "ดินสอ", quantity: 1, price: 15 },
+            ],
+          },
+          {
+            type: "spend",
+            amount: -25,
+            balanceAfter: 50,
+            time: "15:35",
+            items: [
+              { name: "ยางลบ", quantity: 1, price: 5 },
+              { name: "ไม้บรรทัด", quantity: 1, price: 20 },
+            ],
+          },
+        ],
+        "21/05/2026": [
+          {
+            type: "spend",
+            amount: -20,
+            balanceAfter: 30,
+            time: "09:05",
+            items: [
+              { name: "ปากกา", quantity: 1, price: 20 },
+            ],
+          },
+        ],
+      };
+      const studentRecords = [
+        {
+          id: "65001",
+          birthDate: "01/01/2017",
+          nameKey: "personName",
+        },
+      ];
+      let currentLanguage = "th";
+      let calendarDate = parseBirthDate(studentRecords[0].birthDate) || new Date();
+      let historyCalendarDate = parseDisplayDate("19/05/2026") || new Date();
+
+      const translations = {
+        th: {
+          pageTitle: "เติมเงินออนไลน์",
+          subtitle: "ระบุรหัสประจำตัวเพื่อตรวจสอบยอดเงินและประวัติการใช้จ่าย",
+          identityLabel: "รหัสนักเรียน/รหัสบุคลากร",
+          identityPlaceholder: "เช่น 65001",
+          birthDateLabel: "วันเดือนปีเกิด",
+          birthDatePlaceholder: "dd/mm/yyyy",
+          identityRequired: "กรุณากรอกรหัสนักเรียน/รหัสบุคลากร",
+          birthDateRequired: "กรุณากรอกวันเดือนปีเกิด",
+          birthDateInvalid: "กรุณากรอกวันเดือนปีเกิดเป็น ค.ศ. ในรูปแบบ dd/mm/yyyy",
+          identityNotFound: "ไม่พบรหัสนักเรียน/รหัสบุคลากรนี้",
+          birthDateMismatch: "วันเดือนปีเกิดไม่ตรงกับรหัสนี้",
+          checkButton: "ตรวจสอบข้อมูล",
+          historyTitle: "ประวัติการใช้จ่าย",
+          codeLabel: "รหัส",
+          nameLabel: "ชื่อ",
+          personName: "ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา",
+          balanceLabel: "ยอดเงินคงเหลือ",
+          balanceAfterLabel: "คงเหลือ",
+          baht: "บาท",
+          pieceLabel: "ชิ้น",
+          latestTitle: "รายการล่าสุด",
+          topupHistory: "เติมเงิน",
+          spendHistory: "ใช้จ่าย",
+          historyDateLabel: "เลือกวันที่",
+          noHistory: "ไม่มีรายการในวันที่เลือก",
+          backButton: "ย้อนกลับ",
+          topupButton: "เติมเงิน",
+          topupTitle: "เติมเงิน",
+          amountLabel: "เติมเงินจำนวน (บาท)",
+          confirmButton: "ยืนยัน",
+          qrTitle: "Thai QR PromptPay",
+          qrSubtitle: "สแกน QR เพื่อเติมเงินเข้าบัญชี",
+          promptpayForCode: "PromptPay สำหรับรหัส",
+          doneButton: "เสร็จสิ้น",
+        },
+        en: {
+          pageTitle: "Online Top Up",
+          subtitle: "Enter an ID to check balance and transaction history",
+          identityLabel: "Student/Staff ID",
+          identityPlaceholder: "e.g. 65001",
+          birthDateLabel: "Date of Birth",
+          birthDatePlaceholder: "dd/mm/yyyy",
+          identityRequired: "Please enter a student/staff ID",
+          birthDateRequired: "Please enter a date of birth",
+          birthDateInvalid: "Please enter a valid date of birth in dd/mm/yyyy format",
+          identityNotFound: "This student/staff ID was not found",
+          birthDateMismatch: "Date of birth does not match this ID",
+          checkButton: "Check Information",
+          historyTitle: "Transaction History",
+          codeLabel: "ID",
+          nameLabel: "Name",
+          personName: "Miss Naphatsanan Paiboonkritsana",
+          balanceLabel: "Remaining Balance",
+          balanceAfterLabel: "Balance",
+          baht: "THB",
+          pieceLabel: "pc",
+          latestTitle: "Latest Transactions",
+          topupHistory: "Top Up",
+          spendHistory: "Payment",
+          historyDateLabel: "Select date",
+          noHistory: "No transactions on the selected date",
+          backButton: "Back",
+          topupButton: "Top Up",
+          topupTitle: "Top Up",
+          amountLabel: "Top Up Amount (THB)",
+          confirmButton: "Confirm",
+          qrTitle: "Thai QR PromptPay",
+          qrSubtitle: "Scan QR to top up your account",
+          promptpayForCode: "PromptPay for ID",
+          doneButton: "Done",
+        },
+      };
+
+      function setLanguage(language) {
+        currentLanguage = language;
+        document.documentElement.lang = language;
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.dataset.i18n;
+          element.textContent = translations[language][key];
+        });
+        studentInput.placeholder = translations[language].identityPlaceholder;
+        birthDateInput.placeholder = translations[language].birthDatePlaceholder;
+        document.querySelectorAll(".error-message[data-error-key]").forEach((error) => {
+          error.textContent = translations[language][error.dataset.errorKey];
+        });
+        datePickerButton.setAttribute("aria-label", calendarText[language].pickerLabel);
+        historyDatePickerButton.setAttribute("aria-label", calendarText[language].historyPickerLabel);
+        calendarPrev.setAttribute("aria-label", calendarText[language].prevLabel);
+        calendarNext.setAttribute("aria-label", calendarText[language].nextLabel);
+        historyCalendarPrev.setAttribute("aria-label", calendarText[language].prevLabel);
+        historyCalendarNext.setAttribute("aria-label", calendarText[language].nextLabel);
+        languageButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === language);
+        });
+        renderCalendar();
+        renderHistoryCalendar();
+        renderHistoryList();
+      }
+
+      function formatBirthDate(value) {
+        const digits = value.replace(/\D/g, "").slice(0, 8);
+        const day = digits.slice(0, 2);
+        const month = digits.slice(2, 4);
+        const year = digits.slice(4, 8);
+        return [day, month, year].filter(Boolean).join("/");
+      }
+
+      function isValidBirthDate(value) {
+        const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if (!match) return false;
+
+        const day = Number(match[1]);
+        const month = Number(match[2]);
+        const year = Number(match[3]);
+        if (year > new Date().getFullYear()) return false;
+
+        const date = new Date(year, month - 1, day);
+
+        return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+      }
+
+      function parseBirthDate(value) {
+        if (!isValidBirthDate(value)) return null;
+        const [day, month, year] = value.split("/").map(Number);
+        return new Date(year, month - 1, day);
+      }
+
+      function formatDateValue(date) {
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        return `${day}/${month}/${date.getFullYear()}`;
+      }
+
+      function parseDisplayDate(value) {
+        const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if (!match) return null;
+        const day = Number(match[1]);
+        const month = Number(match[2]);
+        const year = Number(match[3]);
+        const date = new Date(year, month - 1, day);
+        if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+        return date;
+      }
+
+      function formatHistoryDateTime(dateValue, time) {
+        const date = parseDisplayDate(dateValue);
+        if (!date) return `${dateValue} ${time}`;
+        if (currentLanguage === "th") {
+          const shortMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+          return `${date.getDate()} ${shortMonths[date.getMonth()]} ${date.getFullYear() + 543} ${time}`;
+        }
+        const shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return `${date.getDate()} ${shortMonths[date.getMonth()]} ${date.getFullYear()} ${time}`;
+      }
+
+      function sameDate(firstDate, secondDate) {
+        return (
+          firstDate &&
+          secondDate &&
+          firstDate.getFullYear() === secondDate.getFullYear() &&
+          firstDate.getMonth() === secondDate.getMonth() &&
+          firstDate.getDate() === secondDate.getDate()
+        );
+      }
+
+      function renderCalendar() {
+        const selectedDate = parseBirthDate(birthDateInput.value);
+        const today = new Date();
+        const text = calendarText[currentLanguage];
+        const year = calendarDate.getFullYear();
+        const month = calendarDate.getMonth();
+        calendarTitle.textContent = `${text.months[month]} ${year}`;
+        calendarGrid.innerHTML = "";
+
+        text.weekdays.forEach((weekday) => {
+          const weekdayElement = document.createElement("div");
+          weekdayElement.className = "calendar-weekday";
+          weekdayElement.textContent = weekday;
+          calendarGrid.append(weekdayElement);
+        });
+
+        const firstDay = new Date(year, month, 1);
+        const startDate = new Date(year, month, 1 - firstDay.getDay());
+
+        for (let index = 0; index < 42; index += 1) {
+          const date = new Date(startDate);
+          date.setDate(startDate.getDate() + index);
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "calendar-day";
+          button.textContent = date.getDate();
+          button.dataset.date = formatDateValue(date);
+          button.setAttribute("aria-label", formatDateValue(date));
+
+          if (date.getMonth() !== month) button.classList.add("is-muted");
+          if (sameDate(date, today)) button.classList.add("is-today");
+          if (sameDate(date, selectedDate)) button.classList.add("is-selected");
+
+          calendarGrid.append(button);
+        }
+      }
+
+      function renderHistoryCalendar() {
+        const selectedDate = parseDisplayDate(historyDateInput.value);
+        const today = new Date();
+        const text = calendarText[currentLanguage];
+        const year = historyCalendarDate.getFullYear();
+        const month = historyCalendarDate.getMonth();
+        historyCalendarTitle.textContent = `${text.months[month]} ${year}`;
+        historyCalendarGrid.innerHTML = "";
+
+        text.weekdays.forEach((weekday) => {
+          const weekdayElement = document.createElement("div");
+          weekdayElement.className = "calendar-weekday";
+          weekdayElement.textContent = weekday;
+          historyCalendarGrid.append(weekdayElement);
+        });
+
+        const firstDay = new Date(year, month, 1);
+        const startDate = new Date(year, month, 1 - firstDay.getDay());
+
+        for (let index = 0; index < 42; index += 1) {
+          const date = new Date(startDate);
+          date.setDate(startDate.getDate() + index);
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "calendar-day";
+          button.textContent = date.getDate();
+          button.dataset.date = formatDateValue(date);
+          button.setAttribute("aria-label", formatDateValue(date));
+
+          if (date.getMonth() !== month) button.classList.add("is-muted");
+          if (sameDate(date, today)) button.classList.add("is-today");
+          if (sameDate(date, selectedDate)) button.classList.add("is-selected");
+
+          historyCalendarGrid.append(button);
+        }
+      }
+
+      function renderHistoryList() {
+        const selectedDate = historyDateInput.value;
+        const transactions = historyTransactions[selectedDate] || [];
+        historyList.innerHTML = "";
+
+        if (!transactions.length) {
+          const empty = document.createElement("div");
+          empty.className = "history-empty";
+          empty.textContent = translations[currentLanguage].noHistory;
+          historyList.append(empty);
+          return;
+        }
+
+        transactions.forEach((transaction, index) => {
+          const detailId = `history-detail-${selectedDate.replace(/\D/g, "")}-${index}`;
+          const row = document.createElement("div");
+          row.className = "history-row";
+
+          const detail = document.createElement("div");
+          const nameRow = document.createElement("div");
+          nameRow.className = "history-name-row";
+
+          const name = document.createElement("div");
+          name.className = "history-name";
+          name.textContent = translations[currentLanguage][transaction.type === "topup" ? "topupHistory" : "spendHistory"];
+          nameRow.append(name);
+
+          if (transaction.items?.length) {
+            const toggle = document.createElement("button");
+            toggle.type = "button";
+            toggle.className = "history-toggle";
+            toggle.dataset.detailTarget = detailId;
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-controls", detailId);
+            toggle.setAttribute("aria-label", "แสดงรายละเอียดรายการใช้จ่าย");
+            toggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6 1.4-1.4Z"/></svg>';
+            nameRow.append(toggle);
+          }
+
+          const date = document.createElement("div");
+          date.className = "history-date";
+          date.textContent = formatHistoryDateTime(selectedDate, transaction.time);
+
+          const money = document.createElement("div");
+          money.className = "history-money";
+
+          const amount = document.createElement("div");
+          const isCredit = transaction.amount > 0;
+          amount.className = `history-amount ${isCredit ? "credit" : "debit"}`;
+          amount.textContent = `${isCredit ? "+" : ""}${transaction.amount} ${translations[currentLanguage].baht}`;
+
+          const balance = document.createElement("div");
+          balance.className = "history-balance";
+          balance.textContent = `${translations[currentLanguage].balanceAfterLabel} ${transaction.balanceAfter} ${translations[currentLanguage].baht}`;
+
+          money.append(amount, balance);
+          detail.append(nameRow, date);
+          row.append(detail, money);
+          historyList.append(row);
+
+          if (transaction.items?.length) {
+            const detailRow = document.createElement("div");
+            detailRow.className = "history-detail-row";
+            detailRow.id = detailId;
+            detailRow.hidden = true;
+
+            const detailList = document.createElement("div");
+            detailList.className = "history-detail-list";
+
+            transaction.items.forEach((item) => {
+              const itemRow = document.createElement("div");
+              itemRow.className = "history-detail-item";
+
+              const itemName = document.createElement("div");
+              itemName.textContent = item.name;
+
+              const itemQuantity = document.createElement("div");
+              itemQuantity.textContent = `${item.quantity} ${translations[currentLanguage].pieceLabel}`;
+
+              const itemPrice = document.createElement("div");
+              itemPrice.className = "history-detail-price";
+              itemPrice.textContent = `${item.price} ${translations[currentLanguage].baht}`;
+
+              itemRow.append(itemName, itemQuantity, itemPrice);
+              detailList.append(itemRow);
+            });
+
+            detailRow.append(detailList);
+            historyList.append(detailRow);
+          }
+        });
+      }
+
+      function openDatePicker() {
+        const selectedDate = parseBirthDate(birthDateInput.value);
+        if (selectedDate) calendarDate = selectedDate;
+        renderCalendar();
+        closeHistoryDatePicker();
+        datePicker.hidden = false;
+        datePickerButton.setAttribute("aria-expanded", "true");
+      }
+
+      function closeDatePicker() {
+        datePicker.hidden = true;
+        datePickerButton.setAttribute("aria-expanded", "false");
+      }
+
+      function toggleDatePicker() {
+        if (datePicker.hidden) {
+          openDatePicker();
+        } else {
+          closeDatePicker();
+        }
+      }
+
+      function openHistoryDatePicker() {
+        const selectedDate = parseDisplayDate(historyDateInput.value);
+        if (selectedDate) historyCalendarDate = selectedDate;
+        renderHistoryCalendar();
+        closeDatePicker();
+        historyDatePicker.hidden = false;
+        historyDatePickerButton.setAttribute("aria-expanded", "true");
+      }
+
+      function closeHistoryDatePicker() {
+        historyDatePicker.hidden = true;
+        historyDatePickerButton.setAttribute("aria-expanded", "false");
+      }
+
+      function toggleHistoryDatePicker() {
+        if (historyDatePicker.hidden) {
+          openHistoryDatePicker();
+        } else {
+          closeHistoryDatePicker();
+        }
+      }
+
+      function setFieldError(input, messageKey = "") {
+        const field = input.closest(".field");
+        const error = field.querySelector(".error-message");
+        field.classList.toggle("has-error", Boolean(messageKey));
+        input.setAttribute("aria-invalid", messageKey ? "true" : "false");
+        if (messageKey) {
+          error.dataset.errorKey = messageKey;
+        } else {
+          delete error.dataset.errorKey;
+        }
+        error.textContent = messageKey ? translations[currentLanguage][messageKey] : "";
+      }
+
+      function clearLookupErrors() {
+        setFieldError(studentInput);
+        setFieldError(birthDateInput);
+      }
+
+      function validateLookup() {
+        const studentId = studentInput.value.trim();
+        const birthDate = birthDateInput.value.trim();
+        clearLookupErrors();
+
+        if (!studentId) {
+          setFieldError(studentInput, "identityRequired");
+          studentInput.focus();
+          return null;
+        }
+
+        if (!birthDate) {
+          setFieldError(birthDateInput, "birthDateRequired");
+          birthDateInput.focus();
+          return null;
+        }
+
+        if (!isValidBirthDate(birthDate)) {
+          setFieldError(birthDateInput, "birthDateInvalid");
+          birthDateInput.focus();
+          return null;
+        }
+
+        const record = studentRecords.find((student) => student.id === studentId);
+        if (!record) {
+          setFieldError(studentInput, "identityNotFound");
+          studentInput.focus();
+          return null;
+        }
+
+        if (record.birthDate !== birthDate) {
+          setFieldError(birthDateInput, "birthDateMismatch");
+          birthDateInput.focus();
+          return null;
+        }
+
+        return record;
+      }
+
+      function showView(view) {
+        lookupView.hidden = view !== lookupView;
+        historyView.hidden = view !== historyView;
+        topupView.hidden = view !== topupView;
+        qrView.hidden = view !== qrView;
+      }
+
+      function currentCode() {
+        return studentInput.value.trim() || "-";
+      }
+
+      function makePromptpayQrSvg(amount) {
+        const size = 25;
+        const cell = 8;
+        const modules = Array.from({ length: size }, () => Array(size).fill(false));
+
+        function finder(x, y) {
+          for (let row = 0; row < 7; row += 1) {
+            for (let col = 0; col < 7; col += 1) {
+              const edge = row === 0 || row === 6 || col === 0 || col === 6;
+              const center = row >= 2 && row <= 4 && col >= 2 && col <= 4;
+              modules[y + row][x + col] = edge || center;
+            }
+          }
+        }
+
+        finder(1, 1);
+        finder(size - 8, 1);
+        finder(1, size - 8);
+
+        const seed = `${promptPayId}:${currentCode()}:${amount}`;
+        let hash = 0;
+        for (let i = 0; i < seed.length; i += 1) {
+          hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+        }
+
+        for (let row = 0; row < size; row += 1) {
+          for (let col = 0; col < size; col += 1) {
+            const inTopLeft = row < 9 && col < 9;
+            const inTopRight = row < 9 && col > size - 10;
+            const inBottomLeft = row > size - 10 && col < 9;
+            if (inTopLeft || inTopRight || inBottomLeft) continue;
+            hash = (hash * 1664525 + 1013904223) >>> 0;
+            modules[row][col] = (hash + row * 7 + col * 11) % 5 < 2;
+          }
+        }
+
+        const rects = modules
+          .flatMap((row, y) => row.map((filled, x) => (filled ? `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}"/>` : "")))
+          .join("");
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size * cell} ${size * cell}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="white"/><g fill="#151515">${rects}</g></svg>`;
+        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!lookupView.hidden) {
+          const record = validateLookup();
+          if (!record) return;
+          historyCode.textContent = currentCode();
+          historyDateInput.value = historyDateInput.value || "19/05/2026";
+          historyCalendarDate = parseDisplayDate(historyDateInput.value);
+          renderHistoryCalendar();
+          renderHistoryList();
+          showView(historyView);
+        } else if (!topupView.hidden) {
+          confirmTopupButton.click();
+        }
+      });
+
+      backButton.addEventListener("click", () => {
+        showView(lookupView);
+        studentInput.focus();
+      });
+
+      topupButton.addEventListener("click", () => {
+        topupCode.textContent = currentCode();
+        topupAmountInput.value = "";
+        showView(topupView);
+        topupAmountInput.focus();
+      });
+
+      cancelTopupButton.addEventListener("click", () => {
+        showView(historyView);
+      });
+
+      confirmTopupButton.addEventListener("click", () => {
+        const amount = topupAmountInput.value.trim() || "0";
+        qrAmount.textContent = amount;
+        qrCode.textContent = currentCode();
+        promptpayQr.src = makePromptpayQrSvg(amount);
+        showView(qrView);
+      });
+
+      qrBackButton.addEventListener("click", () => {
+        showView(topupView);
+        topupAmountInput.focus();
+      });
+
+      qrDoneButton.addEventListener("click", () => {
+        showView(historyView);
+      });
+
+      birthDateInput.addEventListener("input", () => {
+        birthDateInput.value = formatBirthDate(birthDateInput.value);
+        setFieldError(birthDateInput);
+        const selectedDate = parseBirthDate(birthDateInput.value);
+        if (selectedDate) {
+          calendarDate = selectedDate;
+          renderCalendar();
+        }
+      });
+
+      birthDateInput.addEventListener("focus", openDatePicker);
+
+      datePickerButton.addEventListener("click", toggleDatePicker);
+
+      calendarPrev.addEventListener("click", () => {
+        calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() - 1, 1);
+        renderCalendar();
+      });
+
+      calendarNext.addEventListener("click", () => {
+        calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1);
+        renderCalendar();
+      });
+
+      calendarGrid.addEventListener("click", (event) => {
+        const dayButton = event.target.closest(".calendar-day");
+        if (!dayButton) return;
+        birthDateInput.value = dayButton.dataset.date;
+        calendarDate = parseBirthDate(dayButton.dataset.date);
+        setFieldError(birthDateInput);
+        renderCalendar();
+        closeDatePicker();
+        birthDateInput.focus();
+      });
+
+      historyDateInput.addEventListener("focus", openHistoryDatePicker);
+
+      historyDatePickerButton.addEventListener("click", toggleHistoryDatePicker);
+
+      historyCalendarPrev.addEventListener("click", () => {
+        historyCalendarDate = new Date(historyCalendarDate.getFullYear(), historyCalendarDate.getMonth() - 1, 1);
+        renderHistoryCalendar();
+      });
+
+      historyCalendarNext.addEventListener("click", () => {
+        historyCalendarDate = new Date(historyCalendarDate.getFullYear(), historyCalendarDate.getMonth() + 1, 1);
+        renderHistoryCalendar();
+      });
+
+      historyCalendarGrid.addEventListener("click", (event) => {
+        const dayButton = event.target.closest(".calendar-day");
+        if (!dayButton) return;
+        historyDateInput.value = dayButton.dataset.date;
+        historyCalendarDate = parseDisplayDate(dayButton.dataset.date);
+        renderHistoryCalendar();
+        renderHistoryList();
+        closeHistoryDatePicker();
+        historyDateInput.focus();
+      });
+
+      historyList.addEventListener("click", (event) => {
+        const toggle = event.target.closest(".history-toggle");
+        if (!toggle) return;
+
+        const detailRow = document.getElementById(toggle.dataset.detailTarget);
+        if (!detailRow) return;
+
+        const willExpand = detailRow.hidden;
+        detailRow.hidden = !willExpand;
+        toggle.setAttribute("aria-expanded", String(willExpand));
+      });
+
+      studentInput.addEventListener("input", () => {
+        setFieldError(studentInput);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (event.target.closest(".date-field")) return;
+        closeDatePicker();
+        closeHistoryDatePicker();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeDatePicker();
+          closeHistoryDatePicker();
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setLanguage(button.dataset.lang);
+        });
+      });
+
+      setLanguage(currentLanguage);
+      historyDateInput.value = "19/05/2026";
+      renderHistoryCalendar();
+      renderHistoryList();
+    </script>
+  </body>
+</html>
