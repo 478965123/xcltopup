@@ -833,7 +833,7 @@
               <div>
                 <h2 class="summary-title" data-i18n="historyTitle">ประวัติการใช้จ่าย</h2>
                 <div class="summary-code"><span data-i18n="codeLabel">รหัส</span>: <span id="history-code">-</span></div>
-                <div class="summary-code"><span data-i18n="nameLabel">ชื่อ</span>: <span data-i18n="personName">ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา</span></div>
+                <div class="summary-code"><span data-i18n="nameLabel">ชื่อ</span>: <span id="history-name" data-i18n="personName">ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา</span></div>
               </div>
             </div>
 
@@ -878,7 +878,7 @@
               <div>
                 <h2 class="summary-title" data-i18n="topupTitle">เติมเงิน</h2>
                 <div class="summary-code"><span data-i18n="codeLabel">รหัส</span>: <span id="topup-code">-</span></div>
-                <div class="summary-code"><span data-i18n="nameLabel">ชื่อ</span>: <span data-i18n="personName">ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา</span></div>
+                <div class="summary-code"><span data-i18n="nameLabel">ชื่อ</span>: <span id="topup-name" data-i18n="personName">ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา</span></div>
               </div>
             </div>
 
@@ -933,6 +933,8 @@
       const topupAmountInput = document.querySelector("#topup-amount");
       const historyCode = document.querySelector("#history-code");
       const topupCode = document.querySelector("#topup-code");
+      const historyName = document.querySelector("#history-name");
+      const topupName = document.querySelector("#topup-name");
       const qrCode = document.querySelector("#qr-code");
       const qrAmount = document.querySelector("#qr-amount");
       const promptpayQr = document.querySelector("#promptpay-qr");
@@ -1033,6 +1035,11 @@
           birthDate: "01/01/2017",
           nameKey: "personName",
         },
+        {
+          id: "A0222",
+          birthDate: "01/01/1990",
+          nameKey: "staffA0222Name",
+        },
       ];
       let currentLanguage = "th";
       let calendarDate = parseBirthDate(studentRecords[0].birthDate) || new Date();
@@ -1056,6 +1063,7 @@
           codeLabel: "รหัส",
           nameLabel: "ชื่อ",
           personName: "ด.ญ. ณภัสนันทร์ ไพบูลย์กฤษณา",
+          staffA0222Name: "Thitaporn Kuiyabut",
           balanceLabel: "ยอดเงินคงเหลือ",
           balanceAfterLabel: "คงเหลือ",
           baht: "บาท",
@@ -1092,6 +1100,7 @@
           codeLabel: "ID",
           nameLabel: "Name",
           personName: "Miss Naphatsanan Paiboonkritsana",
+          staffA0222Name: "Thitaporn Kuiyabut",
           balanceLabel: "Remaining Balance",
           balanceAfterLabel: "Balance",
           baht: "THB",
@@ -1486,6 +1495,11 @@
         return studentInput.value.trim() || "-";
       }
 
+      function setPersonName(element, record) {
+        element.dataset.i18n = record.nameKey;
+        element.textContent = translations[currentLanguage][record.nameKey];
+      }
+
       function makePromptpayQrSvg(amount) {
         const size = 25;
         const cell = 8;
@@ -1535,6 +1549,7 @@
           const record = validateLookup();
           if (!record) return;
           historyCode.textContent = currentCode();
+          setPersonName(historyName, record);
           historyDateInput.value = historyDateInput.value || "19/05/2026";
           historyCalendarDate = parseDisplayDate(historyDateInput.value);
           renderHistoryCalendar();
@@ -1551,7 +1566,9 @@
       });
 
       topupButton.addEventListener("click", () => {
+        const record = studentRecords.find((student) => student.id === currentCode());
         topupCode.textContent = currentCode();
+        if (record) setPersonName(topupName, record);
         topupAmountInput.value = "";
         showView(topupView);
         topupAmountInput.focus();
